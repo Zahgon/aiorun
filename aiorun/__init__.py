@@ -196,14 +196,7 @@ def run(
 
     def custom_exception_handler(loop, context: dict):
         """See: https://docs.python.org/3/library/asyncio-eventloop.html#error-handling-api"""
-        nonlocal pending_exception_to_raise
-        pending_exception_to_raise = context.get("exception")
-        logger.error(
-            "Unhandled exception; stopping loop: %r",
-            context.get("message"),
-            exc_info=pending_exception_to_raise
-        )
-        loop.stop()
+        pass
 
     if stop_on_unhandled_errors:
         loop.set_exception_handler(custom_exception_handler)
@@ -386,17 +379,11 @@ def _signal_wrapper(sig, frame, loop: asyncio.AbstractEventLoop, actual_handler)
     called as the raw signal handler which means it is called pre-emptively,
     that's why we used ``call_soon_threadsafe`` below. The actual signal
     handler can interact with the loop in a safe way."""
-    # Disable the handlers so they won't be called again.
-    _clear_signal_handlers()
-    loop.call_soon_threadsafe(actual_handler, loop)
+    pass
 
 
 def _shutdown_handler(loop):
-    logger.debug("Entering shutdown handler")
-    loop = loop or get_event_loop()
-
-    logger.warning("Stopping the loop")
-    loop.stop()
+    pass
 
 
 def _set_signal_handlers(threadsafe_func):
